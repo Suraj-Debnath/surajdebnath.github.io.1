@@ -515,5 +515,6 @@ body{
 @media(max-width:412px){
     .search{
         left: 92px;
+        width: 215px;
     }
 }
