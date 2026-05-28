@@ -10,7 +10,7 @@
     <section class="header">
         <div class="navbar-1">
             <a class="navbar" href="index.html">Roni.in</a>
-            <input class="search" placeholder="Search Roni.in">
+            <input type="text" id="searchBar" class="search" placeholder="Search Roni.in">
             <div class="logo"><img src="square.png"><h2>EN</h2>
                 <div class="drop-down">
                     <ul>
@@ -196,18 +196,6 @@
             <div class="box-1-4"><img src="43rd.webp"><p>Mad Angles Chips</p></div>
         </div>
     </section>
-
-    <script>
-        const menuBtn = document.getElementById("menu-btn");
-        const hyper = document.querySelector(".hyper");
-        menuBtn.addEventListener("click", ()=>{
-            if(hyper.style.left === "0px"){
-                  hyper.style.left = "-220px";
-            }
-            else{
-                hyper.style.left = "0px";
-            }
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
