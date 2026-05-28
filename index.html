@@ -28,7 +28,7 @@
                 <a href="index.html">Return & Orders</a></div>
         </div>
         <div class="navbar-2">
-            <div class="menu" onclick="showmenu()"><img src="more.png"></div>
+            <div class="menu"><img src="more.png" id="menu-btn"></div>
         </div>
     </section>
     <section class="main">
@@ -198,15 +198,16 @@
     </section>
 
     <script>
-        var hyper = Document.querySelector(".hyper");
-        function showmenu(){
-            if(hyper.style.left == "0px"){
-                hyper.style.left = "-200px";
+        const menuBtn = document.getElementById("menu-btn");
+        const hyper = document.querySelector(".hyper");
+        menuBtn.addEventListener("click", ()=>{
+            if(hyper.style.left === "0px"){
+                  hyper.style.left = "-220px";
             }
             else{
                 hyper.style.left = "0px";
             }
-        }
+        });
     </script>
 </body>
 </html>
