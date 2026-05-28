@@ -332,7 +332,7 @@ body{
 
 @media(max-width:600px){
     .main{
-        padding-bottom: 300px;
+        padding-bottom: 220px;
         background: linear-gradient(to bottom,rgba(4,9,30,0.7),burlywood,aliceblue,green);
     }
     .banner{
@@ -485,7 +485,6 @@ body{
         margin-top: 0px;
         margin-right: 20px;
         background: none;
-        border: 2px dashed black;
         display: grid;
         gap: 10px;
         grid-template-columns: repeat(2,1fr);
@@ -515,6 +514,5 @@ body{
 @media(max-width:412px){
     .search{
         left: 92px;
-        width: 215px;
     }
 }
