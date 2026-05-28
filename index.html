@@ -27,12 +27,10 @@
             <div class="hyper"><a href="hello.html" target="_blank">Hello,Sign In</a>
                 <a href="index.html">Return & Orders</a></div>
         </div>
-
         <div class="navbar-2">
-
+            <div class="menu" onclick="showmenu()"><img src="more.png"></div>
         </div>
     </section>
-
     <section class="main">
         <div class="banner"></div>
         <div class="picture-1">
@@ -198,5 +196,17 @@
             <div class="box-1-4"><img src="43rd.webp"><p>Mad Angles Chips</p></div>
         </div>
     </section>
+
+    <script>
+        var hyper = Document.querySelector(".hyper");
+        function showmenu(){
+            if(hyper.style.left == "0px"){
+                hyper.style.left = "-200px";
+            }
+            else{
+                hyper.style.left = "0px";
+            }
+        }
+    </script>
 </body>
 </html>
