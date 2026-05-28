@@ -139,6 +139,9 @@ body{
     height: 28px;
     background: #000;
 }
+.menu img{
+    display: none;
+}
 .main{
     background-color: #e3e6e6;
     width: 100%;
@@ -341,10 +344,10 @@ body{
         background: none;
     }
     body{
-        padding-top: 110px;
+        padding-top: 54px;
     }
     .navbar-1{
-        height: 110px;
+        height: 60px;
         align-items: normal;
     }
     .navbar{
@@ -379,10 +382,20 @@ body{
         z-index: 1000;
     }
     .hyper{
-        top: 66px;
-        left: 5px;
+        overflow-x: hidden;
+        display: block;
+        left: -200px;
+        top: 0;
+        height: 100vh;
+        width: 200px;  
+        z-index: 10;
+        background: linear-gradient(to bottom,orange,skyblue);
+        transition: 0.5s;
     }
     .hyper a{
+        width: 140px;
+        display: block;
+        margin: 20px;
         font-size: 15px;
     }
     .picture-1{
@@ -444,6 +457,18 @@ body{
     }
     #img-16{
         margin-top: 2px;
+    }
+    .navbar-2{
+        height: 32px;
+    }
+    .menu img{
+        display: block;
+        height: 28px;
+        width: 24px;
+        background-color: #ddd;
+        margin: 6px;
+        border: 1px solid transparent;
+        border-radius: 6px;
     }
     .picture-2{
         margin-top: -10px;
