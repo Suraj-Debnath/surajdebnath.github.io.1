@@ -8,21 +8,3 @@
                 hyper.style.left = "0px";
             }
         });
-
-const searchBar = document.getElementById("searchBar");
-    searchBar.addEventListener("keyup", function () {
-        let value = searchBar.value.toLowerCase();
-        let items = document.querySelectorAll(
-            ".box, .box-1-2, .box-1-3, .box-1-4"
-        );
-        items.forEach(function(item){
-            let text = item.innerText.toLowerCase();
-            if(text.includes(value)){
-                item.style.display = "block";
-                item.parentNode.prepend(item);
-            }
-            else{
-                   item.style.display = "none";
-            }
-        });
-    });
