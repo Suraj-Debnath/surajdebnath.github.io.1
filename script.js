@@ -1,4 +1,4 @@
- document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     const menuBtn = document.getElementById("menu-btn");
     const sideSidebar = document.querySelector(".hyper");
     menuBtn.addEventListener("click", (e) => {
