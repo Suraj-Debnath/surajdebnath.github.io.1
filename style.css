@@ -199,7 +199,7 @@ body {
     font-size: 12px;
     margin-top: 5px;
 }
-.horizontal-scroll {
+.horizontal-scroll{
     display: flex;
     gap: 15px;
     overflow-x: auto;
@@ -222,7 +222,7 @@ body {
     height: 130px;
     object-fit: contain;
 }
-.product-card-scroll p {
+.product-card-scroll p{
     font-size: 14px;
     margin-top: 10px;
     font-weight: bold;
@@ -296,7 +296,7 @@ body {
         background-color: #f3f3f3;
     }  
     .banner {
-        height: 50vw;
+        height: 60vw;
     }
     .content-wrapper {
         margin-top: -30px;
