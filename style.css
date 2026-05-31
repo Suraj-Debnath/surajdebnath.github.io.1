@@ -24,16 +24,15 @@ body {
     height: 60px;
     gap: 15px;
 }
-.brand-logo svg {
-    margin-top: 5px;
-    border-radius: 10px;
-    width: 150px;
-    height: 40px;
-    background-color: #fff;
+.brand-logo{
+    margin: 5px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
 }
 .brand-logo:hover {
     padding: 2px;
-    background-color: #f3f3f3;
     transition: background-color 0.6s ease, padding 0.3s ease;
 }
 .search-container {
