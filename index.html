@@ -51,87 +51,123 @@
         <div class="banner"></div>
         
         <div class="content-wrapper">
+            
+            <div id="searchBlock" class="box search-result-box" style="display: none; margin-bottom: 25px; border: 2px solid #febd69;">
+                <h2 id="searchTitle">Search Results</h2>
+                <div class="grid" id="searchResultsContainer"></div>
+                <hr style="border: 0; border-top: 1px solid #ddd; margin-top: 20px;">
+            </div>
+
             <div class="picture-1">
                 <div class="box">
                     <h2>Varieties of Dals | Roni.in</h2>
                     <div class="grid">
-                        <div class="product"><img src="1st.webp"><p>Masoor dal</p></div>
-                        <div class="product"><img src="2nd.webp"><p>Moong Dal</p></div>
-                        <div class="product"><img src="3rd.webp"><p>Arhar Dal</p></div>
-                        <div class="product"><img src="4th.webp"><p>Khesari Dal</p></div>
+                        <div class="product" data-price="₹120" data-weight="1 KG"><img src="1st.webp"><p>Masoor dal</p></div>
+                        <div class="product" data-price="₹140" data-weight="1 KG"><img src="2nd.webp"><p>Moong Dal</p></div>
+                        <div class="product" data-price="₹160" data-weight="1 KG"><img src="3rd.webp"><p>Arhar Dal</p></div>
+                        <div class="product" data-price="₹90" data-weight="1 KG"><img src="4th.webp"><p>Khesari Dal</p></div>
                     </div>
                 </div>
 
                 <div class="box">
                     <h2>Up to 60% Off | Grocery</h2>
                     <div class="grid">
-                        <div class="product"><img src="5th.webp"><p>Chana Brown</p></div>
-                        <div class="product"><img src="6th.webp"><p>Motor Dal</p></div>
-                        <div class="product"><img src="7th.webp"><p>Boot Dal</p></div>
-                        <div class="product"><img src="8th.webp"><p>Kabuli Chana</p></div>
+                        <div class="product" data-price="₹110" data-weight="1 KG"><img src="5th.webp"><p>Chana Brown</p></div>
+                        <div class="product" data-price="₹95" data-weight="1 KG"><img src="6th.webp"><p>Motor Dal</p></div>
+                        <div class="product" data-price="₹130" data-weight="1 KG"><img src="7th.webp"><p>Boot Dal</p></div>
+                        <div class="product" data-price="₹180" data-weight="1 KG"><img src="8th.webp"><p>Kabuli Chana</p></div>
                     </div>
                 </div>
 
                 <div class="box">
                     <h2>Top Biscuit Brands</h2>
                     <div class="grid">
-                        <div class="product"><img src="9th.webp"><p>Oreo</p></div>
-                        <div class="product"><img src="10th.webp"><p>Britannia 50-50</p></div>
-                        <div class="product"><img src="11th.webp"><p>Parle-G</p></div>
-                        <div class="product"><img src="12th.webp"><p>Jim Jam</p></div>
+                        <div class="product" data-price="₹40" data-weight="120g"><img src="9th.webp"><p>Oreo</p></div>
+                        <div class="product" data-price="₹30" data-weight="200g"><img src="10th.webp"><p>Britannia 50-50</p></div>
+                        <div class="product" data-price="₹10" data-weight="150g"><img src="11th.webp"><p>Parle-G</p></div>
+                        <div class="product" data-price="₹35" data-weight="150g"><img src="12th.webp"><p>Jim Jam</p></div>
                     </div>
                 </div>
 
                 <div class="box">
                     <h2>Tea Time Snacks</h2>
                     <div class="grid">
-                        <div class="product"><img src="13th.webp"><p>Britannia Marie</p></div>
-                        <div class="product"><img src="14th.webp"><p>Bisk Farm Marie</p></div>
-                        <div class="product"><img src="15th.webp"><p>Magic Moments</p></div>
-                        <div class="product"><img src="16th.webp"><p>Bourbon</p></div>
+                        <div class="product" data-price="₹25" data-weight="250g"><img src="13th.webp"><p>Britannia Marie</p></div>
+                        <div class="product" data-price="₹22" data-weight="250g"><img src="14th.webp"><p>Bisk Farm Marie</p></div>
+                        <div class="product" data-price="₹60" data-weight="400g"><img src="15th.webp"><p>Magic Moments</p></div>
+                        <div class="product" data-price="₹30" data-weight="150g"><img src="16th.webp"><p>Bourbon</p></div>
                     </div>
                 </div>
             </div>
 
             <h2 class="section-title">Authentic Indian Spices</h2>
             <div class="picture-2 horizontal-scroll">
-                <div class="product-card-scroll"><img src="17th.webp"><p>Garam Masala</p></div>
-                <div class="product-card-scroll"><img src="18th.webp"><p>Meat Masala</p></div>
-                <div class="product-card-scroll"><img src="19th.webp"><p>Dhania Powder</p></div>
-                <div class="product-card-scroll"><img src="20th.webp"><p>Chili Powder</p></div>
-                <div class="product-card-scroll"><img src="21st.webp"><p>Jeera Powder</p></div>
-                <div class="product-card-scroll"><img src="22nd.webp"><p>Tata Salt</p></div>
-                <div class="product-card-scroll"><img src="23rd.webp"><p>Sorisa</p></div>
-                <div class="product-card-scroll"><img src="24th.webp"><p>Posto</p></div>
+                <div class="product-card-scroll" data-price="₹50" data-weight="100g"><img src="17th.webp"><p>Garam Masala</p></div>
+                <div class="product-card-scroll" data-price="₹55" data-weight="100g"><img src="18th.webp"><p>Meat Masala</p></div>
+                <div class="product-card-scroll" data-price="₹45" data-weight="200g"><img src="19th.webp"><p>Dhania Powder</p></div>
+                <div class="product-card-scroll" data-price="₹48" data-weight="200g"><img src="20th.webp"><p>Chili Powder</p></div>
+                <div class="product-card-scroll" data-price="₹52" data-weight="200g"><img src="21st.webp"><p>Jeera Powder</p></div>
+                <div class="product-card-scroll" data-price="₹28" data-weight="1 KG"><img src="22nd.webp"><p>Tata Salt</p></div>
+                <div class="product-card-scroll" data-price="₹40" data-weight="200g"><img src="23rd.webp"><p>Sorisa</p></div>
+                <div class="product-card-scroll" data-price="₹150" data-weight="100g"><img src="24th.webp"><p>Posto</p></div>
             </div>
 
             <h2 class="section-title">Dairy & Daily Essentials</h2>
             <div class="picture-3 horizontal-scroll">
-                <div class="product-card-scroll"><img src="25th.webp"><p>Butter</p></div>
-                <div class="product-card-scroll"><img src="26th.webp"><p>Amul Milk</p></div>
-                <div class="product-card-scroll"><img src="27th.webp"><p>Milk Powder</p></div>
-                <div class="product-card-scroll"><img src="28th.webp"><p>Tea Leaf</p></div>
-                <div class="product-card-scroll"><img src="29th.webp"><p>Sugar</p></div>
-                <div class="product-card-scroll"><img src="30th.webp"><p>Nakul Dana</p></div>
-                <div class="product-card-scroll"><img src="31st.webp"><p>Batasa</p></div>
-                <div class="product-card-scroll"><img src="32nd.webp"><p>Tal Mishri</p></div>
+                <div class="product-card-scroll" data-price="₹56" data-weight="100g"><img src="25th.webp"><p>Butter</p></div>
+                <div class="product-card-scroll" data-price="₹27" data-weight="500ml"><img src="26th.webp"><p>Amul Milk</p></div>
+                <div class="product-card-scroll" data-price="₹360" data-weight="1 KG"><img src="27th.webp"><p>Milk Powder</p></div>
+                <div class="product-card-scroll" data-price="₹140" data-weight="250g"><img src="28th.webp"><p>Tea Leaf</p></div>
+                <div class="product-card-scroll" data-price="₹45" data-weight="1 KG"><img src="29th.webp"><p>Sugar</p></div>
+                <div class="product-card-scroll" data-price="₹30" data-weight="200g"><img src="30th.webp"><p>Nakul Dana</p></div>
+                <div class="product-card-scroll" data-price="₹35" data-weight="200g"><img src="31st.webp"><p>Batasa</p></div>
+                <div class="product-card-scroll" data-price="₹80" data-weight="250g"><img src="32nd.webp"><p>Tal Mishri</p></div>
             </div>
 
             <h2 class="section-title">Chips & Munchies</h2>
             <div class="picture-4 dynamic-grid">
-                <div class="grid-item"><img src="33rd.webp"><p>Red Kurkure</p></div>
-                <div class="grid-item"><img src="34th.webp"><p>Black Hot Kurkure</p></div>
-                <div class="grid-item"><img src="35th.webp"><p>Green Chili Kurkure</p></div>
-                <div class="grid-item"><img src="36th.webp"><p>Corn Kurkure</p></div>
-                <div class="grid-item"><img src="37th.webp"><p>Uncle Chips</p></div>
-                <div class="grid-item"><img src="38th.webp"><p>Bhoot Chips</p></div>
-                <div class="grid-item"><img src="40th.webp"><p>Salted Chips</p></div>
-                <div class="grid-item"><img src="41st.webp"><p>Onion Chips</p></div>
-                <div class="grid-item"><img src="42nd.webp"><p>Red Hot Chips</p></div>
-                <div class="grid-item"><img src="43rd.webp"><p>Mad Angles</p></div>
+                <div class="grid-item" data-price="₹20" data-weight="90g"><img src="33rd.webp"><p>Red Kurkure</p></div>
+                <div class="grid-item" data-price="₹20" data-weight="90g"><img src="34th.webp"><p>Black Hot Kurkure</p></div>
+                <div class="grid-item" data-price="₹20" data-weight="90g"><img src="35th.webp"><p>Green Chili Kurkure</p></div>
+                <div class="grid-item" data-price="₹10" data-weight="40g"><img src="36th.webp"><p>Corn Kurkure</p></div>
+                <div class="grid-item" data-price="₹20" data-weight="85g"><img src="37th.webp"><p>Uncle Chips</p></div>
+                <div class="grid-item" data-price="₹10" data-weight="35g"><img src="38th.webp"><p>Bhoot Chips</p></div>
+                <div class="grid-item" data-price="₹20" data-weight="90g"><img src="40th.webp"><p>Salted Chips</p></div>
+                <div class="grid-item" data-price="₹20" data-weight="90g"><img src="41st.webp"><p>Onion Chips</p></div>
+                <div class="grid-item" data-price="₹20" data-weight="90g"><img src="42nd.webp"><p>Red Hot Chips</p></div>
+                <div class="grid-item" data-price="₹30" data-weight="120g"><img src="43rd.webp"><p>Mad Angles</p></div>
             </div>
         </div>
     </main>
+
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-body">
+                <div class="modal-left">
+                    <img id="modalProductImg" src="" alt="Product Image">
+                </div>
+                <div class="modal-right">
+                    <h2 id="modalProductName">Product Title</h2>
+                    <p class="modal-weight">Weight: <span id="modalProductWeight"></span></p>
+                    <p class="modal-price">Price: <span id="modalProductPrice"></span></p>
+                    
+                    <div class="quantity-selector">
+                        <label for="prodQty">Qty: </label>
+                        <select id="prodQty">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                    
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                    <button class="buy-now-btn">Buy Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
