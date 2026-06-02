@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (authModal) authModal.style.display = "block";
         });
     }
-
     const showSignupLink = document.getElementById("showSignupLink");
     const showLoginLink = document.getElementById("showLoginLink");
     const loginSection = document.getElementById("loginSection");
@@ -58,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             try {
-                // ব্লিংকিং সহ সবুজ মেসেজ শুরু হবে
                 showAuthMsg("সার্ভার কানেক্ট হচ্ছে, দয়া করে কয়েক সেকেন্ড অপেক্ষা করুন...", "green", true);
 
                 const response = await fetch('https://backend-7k8k.onrender.com/api/auth/signup', {
@@ -79,7 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     showAuthMsg(data.message, "red", false);
                 }
             } catch (error) {
-                // এখানে এরর মেসেজ বদলে ব্লিংকিং সবুজ মেসেজ দেওয়া হলো
                 showAuthMsg("সার্ভার ব্যাকগ্রাউন্ডে চালু হচ্ছে... দয়া করে আর ৩০ সেকেন্ড অপেক্ষা করে আবার ক্লিক করুন।", "green", true);
             }
         });
@@ -97,7 +94,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             try {
-                // ব্লিংকিং সহ সবুজ মেসেজ শুরু হবে
                 showAuthMsg("সার্ভার কানেক্ট হচ্ছে, দয়া করে কয়েক সেকেন্ড অপেক্ষা করুন...", "green", true);
 
                 const response = await fetch('https://backend-7k8k.onrender.com/api/auth/login', {
@@ -118,13 +114,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     showAuthMsg(data.message, "red", false);
                 }
             } catch (error) {
-                // এখানেও এরর মেসেজ বদলে ব্লিংকিং সবুজ মেসেজ দেওয়া হলো
                 showAuthMsg("সার্ভার ব্যাকগ্রাউন্ডে চালু হচ্ছে... দয়া করে আর ৩০ সেকেন্ড অপেক্ষা করে আবার ক্লিক করুন।", "green", true);
             }
         });
     }
 
-    // মেসেজ দেখানোর ফাংশনটি আপডেট করা হলো ব্লিংক অপশন সহ
     function showAuthMsg(text, color, shouldBlink = false) {
         if (authMessage) {
             authMessage.textContent = text;
@@ -133,8 +127,6 @@ document.addEventListener("DOMContentLoaded", () => {
             
             if (shouldBlink) {
                 authMessage.style.animation = "blinkEffect 1s infinite alternate";
-                
-                // গ্লোবাল স্টাইলশিটে ব্লিংক অ্যানিমেশন ইনজেক্ট করা হচ্ছে (যদি না থাকে)
                 if (!document.getElementById("blink-style")) {
                     const style = document.createElement("style");
                     style.id = "blink-style";
@@ -147,12 +139,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     document.head.appendChild(style);
                 }
             } else {
-                authMessage.style.animation = "none"; // সাধারণ মেসেজের জন্য ব্লিংক বন্ধ থাকবে
+                authMessage.style.animation = "none"; 
             }
         }
     }
-
-    // ... (বাকি সার্চ বার এবং কার্ট কোড আগের মতোই নিচে থাকবে)
     const searchBar = document.getElementById("searchBar");
     const searchBlock = document.getElementById("searchBlock");
     const searchResultsContainer = document.getElementById("searchResultsContainer");
