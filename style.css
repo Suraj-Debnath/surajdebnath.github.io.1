@@ -100,6 +100,7 @@ body {
 }
 .hyper {
     display: flex;
+    align-items: center;
     gap: 15px;
 }
 .nav-link {
@@ -323,7 +324,7 @@ body {
 .modal-price {
     font-size: 22px;
     font-weight: bold;
-    color: #B12704; /* Amazon Red-Orange Price Color */
+    color: #B12704;
 }
 .quantity-selector {
     margin: 5px 0;
@@ -357,6 +358,10 @@ body {
 .buy-now-btn:hover {
     background-color: #fa8900;
 }
+
+/* ========================================== */
+/* RESPONSIVE MEDIA QUERIES */
+/* ========================================== */
 @media (max-width: 600px) {
     .modal-body {
         grid-template-columns: repeat(auto fit,minmax(100px, 1fr));
@@ -446,4 +451,58 @@ body {
     .dynamic-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+}
+
+.goog-te-banner-frame { display: none !important;}
+ body { top: 0px !important; }
+.goog-logo-link { display: none !important;}
+.goog-te-gadget { color: transparent !important;}
+
+/* Cart Page Specific Layout */
+.cart-item {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid #e7e7e7;
+    align-items: center;
+}
+.cart-item-img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    background: #f7f7f7;
+    border-radius: 4px;
+}
+.cart-item-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.cart-item-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0066c0;
+}
+.cart-item-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #B12704;
+}
+.cart-action-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 5px;
+}
+.delete-item-btn {
+    background: none;
+    border: none;
+    color: #0066c0;
+    cursor: pointer;
+    font-size: 13px;
+}
+.delete-item-btn:hover {
+    text-decoration: underline;
+    color: #c45500;
 }
