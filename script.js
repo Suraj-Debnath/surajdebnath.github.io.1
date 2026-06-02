@@ -5,13 +5,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (authModal) {
         if (savedUser) {
-
             authModal.style.display = "none";
             const userObj = JSON.parse(savedUser);
             const loginLink = document.getElementById("nav-user-signin");
             if (loginLink) loginLink.textContent = `Hello, ${userObj.name}`;
         } else {
-      
             authModal.style.display = "block";
         }
     }
@@ -60,7 +58,10 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             try {
-                const response = await fetch('http://localhost:5000/api/auth/signup', {
+                // ব্লিংকিং সহ সবুজ মেসেজ শুরু হবে
+                showAuthMsg("সার্ভার কানেক্ট হচ্ছে, দয়া করে কয়েক সেকেন্ড অপেক্ষা করুন...", "green", true);
+
+                const response = await fetch('https://backend-7k8k.onrender.com/api/auth/signup', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name, email, phone, password })
@@ -68,17 +69,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 const data = await response.json();
 
                 if (data.success) {
-                    showAuthMsg("অ্যাকাউন্ট তৈরি হয়েছে! এবার লগইন করুন।", "green");
+                    showAuthMsg("অ্যাকাউন্ট তৈরি হয়েছে! এবার লগইন করুন।", "green", false);
                     setTimeout(() => {
                         signupSection.style.display = "none";
                         loginSection.style.display = "block";
                         if (authMessage) authMessage.style.display = "none";
                     }, 2000);
                 } else {
-                    showAuthMsg(data.message, "red");
+                    showAuthMsg(data.message, "red", false);
                 }
             } catch (error) {
-                showAuthMsg("ব্যাকএন্ড সার্ভার বন্ধ আছে!", "red");
+                // এখানে এরর মেসেজ বদলে ব্লিংকিং সবুজ মেসেজ দেওয়া হলো
+                showAuthMsg("সার্ভার ব্যাকগ্রাউন্ডে চালু হচ্ছে... দয়া করে আর ৩০ সেকেন্ড অপেক্ষা করে আবার ক্লিক করুন।", "green", true);
             }
         });
     }
@@ -90,12 +92,15 @@ document.addEventListener("DOMContentLoaded", () => {
             const password = document.getElementById("loginPassword").value.trim();
 
             if (!emailOrPhone || !password) {
-                showAuthMsg("ইউজারনেম এবং পাসওয়ার্ড দিন!", "red");
+                showAuthMsg("ইউজারনেম এবং পাসওয়ার্ড দিন!", "red");
                 return;
             }
 
             try {
-                const response = await fetch('http://localhost:5000/api/auth/login', {
+                // ব্লিংকিং সহ সবুজ মেসেজ শুরু হবে
+                showAuthMsg("সার্ভার কানেক্ট হচ্ছে, দয়া করে কয়েক সেকেন্ড অপেক্ষা করুন...", "green", true);
+
+                const response = await fetch('https://backend-7k8k.onrender.com/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ emailOrPhone, password })
@@ -104,28 +109,50 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (data.success) {
                     localStorage.setItem("loggedInUser", JSON.stringify(data.user));
-                    showAuthMsg("লগইন সফল! পেজ লোড হচ্ছে...", "green");
+                    showAuthMsg("লগইন সফল! পেজ লোড হচ্ছে...", "green", false);
                     setTimeout(() => {
                         if (authModal) authModal.style.display = "none";
                         window.location.reload();
                     }, 1000);
                 } else {
-                    showAuthMsg(data.message, "red");
+                    showAuthMsg(data.message, "red", false);
                 }
             } catch (error) {
-                showAuthMsg("ব্যাকএন্ড সার্ভার বন্ধ আছে!", "red");
+                // এখানেও এরর মেসেজ বদলে ব্লিংকিং সবুজ মেসেজ দেওয়া হলো
+                showAuthMsg("সার্ভার ব্যাকগ্রাউন্ডে চালু হচ্ছে... দয়া করে আর ৩০ সেকেন্ড অপেক্ষা করে আবার ক্লিক করুন।", "green", true);
             }
         });
     }
 
-    function showAuthMsg(text, color) {
+    // মেসেজ দেখানোর ফাংশনটি আপডেট করা হলো ব্লিংক অপশন সহ
+    function showAuthMsg(text, color, shouldBlink = false) {
         if (authMessage) {
             authMessage.textContent = text;
             authMessage.style.color = color;
             authMessage.style.display = "block";
+            
+            if (shouldBlink) {
+                authMessage.style.animation = "blinkEffect 1s infinite alternate";
+                
+                // গ্লোবাল স্টাইলশিটে ব্লিংক অ্যানিমেশন ইনজেক্ট করা হচ্ছে (যদি না থাকে)
+                if (!document.getElementById("blink-style")) {
+                    const style = document.createElement("style");
+                    style.id = "blink-style";
+                    style.innerHTML = `
+                        @keyframes blinkEffect {
+                            from { opacity: 1; }
+                            to { opacity: 0.2; }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            } else {
+                authMessage.style.animation = "none"; // সাধারণ মেসেজের জন্য ব্লিংক বন্ধ থাকবে
+            }
         }
     }
 
+    // ... (বাকি সার্চ বার এবং কার্ট কোড আগের মতোই নিচে থাকবে)
     const searchBar = document.getElementById("searchBar");
     const searchBlock = document.getElementById("searchBlock");
     const searchResultsContainer = document.getElementById("searchResultsContainer");
@@ -133,17 +160,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (searchBar) {
         searchBar.addEventListener("input", (e) => {
             const searchTerm = e.target.value.toLowerCase().trim();
-            
             if (searchTerm === "") {
                 if (searchBlock) searchBlock.style.display = "none";
                 return;
             }
-
             const allProducts = document.querySelectorAll(".product, .product-card-scroll, .grid-item");
             let hasResults = false;
-
             if (searchResultsContainer) searchResultsContainer.innerHTML = "";
-
             allProducts.forEach(prod => {
                 const pTag = prod.querySelector("p");
                 if (pTag) {
@@ -155,7 +178,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
             });
-
             if (hasResults) {
                 if (searchBlock) searchBlock.style.display = "block";
             } else {
@@ -180,27 +202,21 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.addEventListener("click", (e) => {
         const productCard = e.target.closest(".product, .product-card-scroll, .grid-item");
         if (productCard && !e.target.classList.contains("add-to-cart-btn")) {
-            
             const name = productCard.querySelector("p").textContent;
             const imgUrl = productCard.querySelector("img").src;
             const price = parseInt(productCard.getAttribute("data-price")) || 0;
             const weight = productCard.getAttribute("data-weight") || "1kg";
-
             selectedProductData = { name, imgUrl, price, weight };
-
             const mName = document.getElementById("modalProductName");
             const mImg = document.getElementById("modalProductImg");
             const mPrice = document.getElementById("modalProductPrice");
             const mWeight = document.getElementById("modalProductWeight");
-
             if(mName) mName.textContent = name;
             if(mImg) mImg.src = imgUrl;
             if(mPrice) mPrice.textContent = `₹${price}`;
             if(mWeight) mWeight.textContent = weight;
-            
             const pQty = document.getElementById("prodQty");
             if(pQty) pQty.value = "1";
-
             if (productModal) productModal.style.display = "block";
         }
     });
@@ -220,12 +236,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (modalAddToCartBtn) {
         modalAddToCartBtn.addEventListener("click", () => {
             if (!selectedProductData) return;
-
             const qtySelect = document.getElementById("prodQty");
             const quantity = parseInt(qtySelect.value) || 1;
-
             const existingItem = cart.find(item => item.name === selectedProductData.name);
-
             if (existingItem) {
                 existingItem.quantity += quantity;
             } else {
@@ -237,12 +250,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     quantity: quantity
                 });
             }
-
             localStorage.setItem("userCart", JSON.stringify(cart));
             updateCartCounter();
-
             if (productModal) productModal.style.display = "none";
-            alert(`🎉 ${selectedProductData.name} কার্টে যোগ হয়েছে!`);
+            alert(`🎉 ${selectedProductData.name} কার্টে যোগ হয়েছে!`);
         });
     }
 
@@ -260,28 +271,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderCartPage() {
         if (!cartItemsContainer) return; 
-
         updateCartCounter();
-
         if (cart.length === 0) {
             cartItemsContainer.style.display = "none";
             if (checkoutBox) checkoutBox.style.display = "none";
             if (emptyCartMessage) emptyCartMessage.style.display = "block";
             return;
         }
-
         cartItemsContainer.style.display = "block";
         if (checkoutBox) checkoutBox.style.display = "block";
         if (emptyCartMessage) emptyCartMessage.style.display = "none";
         cartItemsContainer.innerHTML = "";
-
         let grandTotal = 0;
         let totalItems = 0;
-
         cart.forEach((item, index) => {
             grandTotal += (item.price * item.quantity);
             totalItems += item.quantity;
-
             const itemHtml = `
                 <div class="cart-item">
                     <img src="${item.imgUrl}" class="cart-item-img" alt="${item.name}">
@@ -305,7 +310,6 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
             cartItemsContainer.innerHTML += itemHtml;
         });
-
         if (totalItemsCount) totalItemsCount.textContent = totalItems;
         if (cartSubtotal) cartSubtotal.textContent = grandTotal;
 
