@@ -24,7 +24,7 @@ body {
     height: 60px;
     gap: 15px;
 }
-.brand-logo{
+.brand-logo {
     margin: 5px;
     text-decoration: none;
     color: #fff;
@@ -112,6 +112,38 @@ body {
 .nav-link:hover {
     outline: 1px solid #fff;
     padding: 2px;
+}
+.main-cart-link {
+    display: block;
+}
+.mobile-cart-link {
+    display: none;
+    text-decoration: none;
+    font-size: 22px;
+    position: relative;
+}
+.mobile-cart-link .cartCount {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: #f3a847;
+    color: #131921;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 2px 6px;
+}
+.close-sidebar {
+    display: none;
+    background: none;
+    border: none;
+    color: #111;
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    cursor: pointer;
 }
 .navbar-2 {
     display: flex;
@@ -217,6 +249,7 @@ body {
     border-radius: 4px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     text-align: center;
+    cursor: pointer;
 }
 .product-card-scroll img {
     width: 100%;
@@ -239,6 +272,7 @@ body {
     text-align: center;
     border-radius: 4px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    cursor: pointer;
 }
 .grid-item img {
     width: 100%;
@@ -285,6 +319,7 @@ body {
     font-size: 30px;
     font-weight: bold;
     cursor: pointer;
+    z-index: 10;
 }
 .close-btn:hover {
     color: #111;
@@ -359,106 +394,6 @@ body {
     background-color: #fa8900;
 }
 
-/* ========================================== */
-/* RESPONSIVE MEDIA QUERIES */
-/* ========================================== */
-@media (max-width: 600px) {
-    .modal-body {
-        grid-template-columns: repeat(auto fit,minmax(100px, 1fr));
-        gap: 15px;
-    }
-    .modal-content {
-        margin: 20% auto;
-        padding: 15px;
-    }
-    .modal-right h2 {
-        font-size: 20px;
-    }
-}
-@media (max-width: 1024px) {
-    .content-wrapper {
-        margin-top: -80px;
-    }
-    .search-container {
-        max-width: 450px;
-    }
-}
-@media (max-width: 768px) {
-    .navbar-1 {
-        padding: 10px;
-    } 
-    .nav-right {
-        gap: 10px;
-    }
-    .lang-logo {
-        display: none; 
-    }
-    .hyper {
-        position: fixed;
-        top: 0;
-        left: -260px;
-        width: 260px;
-        height: 100vh;
-        background-color: #fff;
-        flex-direction: column;
-        padding: 60px 20px;
-        gap: 20px;
-        box-shadow: 4px 0 15px rgba(0,0,0,0.2);
-        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 9999;
-    }
-    .hyper.active {
-        left: 0;
-    }
-    .nav-link {
-        color: #111;
-        font-size: 18px;
-        font-weight: bold;
-        padding: 10px;
-        border-bottom: 1px solid #ddd;
-    }
-    .nav-link:hover {
-        outline: none;
-        background-color: #f3f3f3;
-    }  
-    .banner {
-        height: 60vw;
-    }
-    .content-wrapper {
-        margin-top: -30px;
-        padding: 0 10px 20px;
-    }   
-    .section-title {
-        font-size: 18px;
-        margin: 20px 0 10px;
-    }
-}
-@media (max-width: 480px) {
-    .brand-logo {
-        font-size: 18px;
-    }
-    .search {
-        font-size: 13px;
-        height: 36px;
-    }
-    .search-btn {
-        height: 36px;
-        width: 38px;
-    }
-    .picture-1 {
-        grid-template-columns: 1fr;
-    }
-    .dynamic-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-.goog-te-banner-frame { display: none !important;}
- body { top: 0px !important; }
-.goog-logo-link { display: none !important;}
-.goog-te-gadget { color: transparent !important;}
-
-/* Cart Page Specific Layout */
 .cart-item {
     display: flex;
     gap: 20px;
@@ -480,7 +415,7 @@ body {
     gap: 6px;
 }
 .cart-item-title {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     color: #0066c0;
 }
@@ -505,4 +440,110 @@ body {
 .delete-item-btn:hover {
     text-decoration: underline;
     color: #c45500;
+}
+
+@media (max-width: 768px) {
+    .modal-body {
+        flex-direction: repeat(auto-fit,100px 1fr);
+        gap: 15px;
+    }
+    .modal-content {
+        margin: 20% auto;
+        padding: 15px;
+    }
+    .modal-right h2 {
+        font-size: 20px;
+    }
+    .search-container {
+        max-width: 450px;
+    }
+    .navbar-1 {
+        padding: 10px;
+    } 
+    .nav-right {
+        gap: 15px;
+    }
+    .lang-logo {
+        display: none; 
+    }
+    .main-cart-link {
+        display: none;
+    }
+    .mobile-cart-link {
+        display: block;
+    }
+    .close-sidebar {
+        display: block;
+    }
+    .hyper {
+        position: fixed;
+        top: 0;
+        left: -260px;
+        width: 260px;
+        height: 100vh;
+        background-color: #fff;
+        flex-direction: column;
+        padding: 60px 20px;
+        gap: 20px;
+        box-shadow: 4px 0 15px rgba(0,0,0,0.2);
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 9999;
+        align-items: flex-start;
+    }
+    .hyper.active {
+        left: 0;
+    }
+    .nav-link {
+        color: #111;
+        font-size: 18px;
+        font-weight: bold;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        width: 100%;
+    }
+    .nav-link:hover {
+        outline: none;
+        background-color: #f3f3f3;
+    }   
+    .banner {
+        height: 60vw;
+    }
+    .content-wrapper {
+        margin-top: -30px;
+        padding: 0 10px 20px;
+    }    
+    .section-title {
+        font-size: 18px;
+        margin: 20px 0 10px;
+    }
+    .cart-item {
+        gap: 10px;
+    }
+    .cart-item-img {
+        width: 70px;
+        height: 70px;
+    }
+    .cart-item-title {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .brand-logo {
+        font-size: 18px;
+    }
+    .search {
+        font-size: 13px;
+        height: 36px;
+    }
+    .search-btn {
+        height: 36px;
+        width: 38px;
+    }
+    .picture-1 {
+        grid-template-columns: 1fr;
+    }
+    .dynamic-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
