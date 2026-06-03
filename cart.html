@@ -11,42 +11,37 @@
     <header class="header">
         <div class="navbar-1">
             <a class="brand-logo" href="index.html">Roni.in</a>
-            <div class="nav-right" style="margin-left: auto;">
-                <div class="hyper">
-                    <a href="index.html" class="nav-link">Home 🏠</a>
-                    <a href="#" class="nav-link" id="nav-user-name">Hello, Sign In</a>
-                </div>
+            <div class="search-container" style="visibility: hidden;">
+                <input type="text" class="search" placeholder="Search">
+                <button class="search-btn">🔍</button>
+            </div>
+            <div class="nav-right">
+                <a href="cart.html" class="nav-link mobile-cart-link">🛒<span class="cartCount">0</span></a>
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="cart.html" class="nav-link main-cart-link">Cart 🛒: <span class="cartCount" style="color: #f3a847;">0</span></a>
             </div>
         </div>
     </header>
 
-    <main class="content-wrapper" style="margin-top: 20px; display: flex; gap: 20px; flex-wrap: wrap;">
-        
-        <div class="box" style="flex: 2; min-width: 300px;">
-            <h1 style="font-size: 26px; border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-bottom: 20px;">Shopping Cart</h1>
-            
-            <div id="emptyCartMessage" style="display: none; text-align: center; padding: 40px 0;">
-                <h2>Your Roni.in Cart is empty.</h2>
-                <p style="margin-top: 10px;">Your Shopping Cart lives to serve. Give it purpose — fill it with groceries and snacks!</p>
-                <a href="index.html" class="buy-now-btn" style="display: inline-block; text-decoration: none; margin-top: 20px; text-align: center;">Continue Shopping</a>
+    <main class="main" style="padding: 20px;">
+        <div class="content-wrapper" style="margin-top: 20px; display: flex; flex-direction: column; gap: 20px;">
+            <div class="box" style="width: 100%;">
+                <h2>Shopping Cart</h2>
+                <hr style="border: 0; border-top: 1px solid #ddd; margin: 15px 0;">
+                <div id="cartItemsContainer"></div>
+                <div id="emptyCartMessage" style="display: none; text-align: center; padding: 40px 0;">
+                    <h3>Your Roni.in Cart is empty.</h3>
+                    <a href="index.html" style="color: #0066c0; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 15px;">Go shopping now</a>
+                </div>
             </div>
 
-            <div id="cartItemsContainer"></div>
-        </div>
-
-        <div class="box" id="checkoutBox" style="flex: 1; min-width: 250px; height: fit-content; background-color: #f7f7f7; border: 1px solid #ddd;">
-            <h2 style="font-size: 18px; margin-bottom: 15px;">
-                Subtotal (<span id="totalItemsCount">0</span> items): 
-                <span style="color: #B12704; font-size: 22px; font-weight: bold;">₹<span id="cartSubtotal">0</span></span>
-            </h2>
-            <div style="margin-bottom: 20px; font-size: 14px; color: #007600;">
-                🌱 Your order qualifies for FREE Delivery!
+            <div class="box" id="subtotalBox" style="width: 100%; max-width: 400px; align-self: flex-end;">
+                <h3>Subtotal (<span id="totalItemsText">0</span> items): <span style="color: #B12704; font-size: 20px;" id="totalPriceText">₹0</span></h3>
+                <button class="buy-now-btn" style="width: 100%; margin-top: 15px; border-radius: 4px;">Proceed to Buy</button>
             </div>
-            <button id="proceedToBuyBtn" class="buy-now-btn" style="width: 100%; padding: 12px; border-radius: 8px;">Proceed to Buy</button>
         </div>
-
     </main>
 
-    <script src="script.js"></script>
+    <script src="cart.js"></script>
 </body>
 </html>
