@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (authModal) authModal.style.display = "block";
         });
     }
+
     const showSignupLink = document.getElementById("showSignupLink");
     const showLoginLink = document.getElementById("showLoginLink");
     const loginSection = document.getElementById("loginSection");
@@ -57,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             try {
-                showAuthMsg("সার্ভার কানেক্ট হচ্ছে, দয়া করে কয়েক সেকেন্ড অপেক্ষা করুন...", "green", true);
+                showAuthMsg("সার্ভার কানেক্ট হচ্ছে, দয়া করে কয়েক সেকেন্ড অপেক্ষা করুন...", "green", true);
 
                 const response = await fetch('https://backend-7k8k.onrender.com/api/auth/signup', {
                     method: 'POST',
@@ -77,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     showAuthMsg(data.message, "red", false);
                 }
             } catch (error) {
-                showAuthMsg("সার্ভার ব্যাকগ্রাউন্ডে চালু হচ্ছে... দয়া করে আর ৩০ সেকেন্ড অপেক্ষা করে আবার ক্লিক করুন।", "green", true);
+                showAuthMsg("সার্ভার ব্যাকগ্রাউন্ডে চালু হচ্ছে... দয়া করে আর ৩০ সেকেন্ড অপেক্ষা করে আবার ক্লিক করুন।", "green", true);
             }
         });
     }
@@ -94,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             try {
-                showAuthMsg("সার্ভার কানেক্ট হচ্ছে, দয়া করে কয়েক সেকেন্ড অপেক্ষা করুন...", "green", true);
+                showAuthMsg("সার্ভার কানেক্ট হচ্ছে, দয়া করে কয়েক সেকেন্ড অপেক্ষা করুন...", "green", true);
 
                 const response = await fetch('https://backend-7k8k.onrender.com/api/auth/login', {
                     method: 'POST',
@@ -114,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     showAuthMsg(data.message, "red", false);
                 }
             } catch (error) {
-                showAuthMsg("সার্ভার ব্যাকগ্রাউন্ডে চালু হচ্ছে... দয়া করে আর ৩০ সেকেন্ড অপেক্ষা করে আবার ক্লিক করুন।", "green", true);
+                showAuthMsg("সার্ভার ব্যাকগ্রাউন্ডে চালু হচ্ছে... দয়া করে আর ৩০ সেকেন্ড অপেক্ষা করে আবার ক্লিক করুন।", "green", true);
             }
         });
     }
@@ -143,6 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     }
+
     const searchBar = document.getElementById("searchBar");
     const searchBlock = document.getElementById("searchBlock");
     const searchResultsContainer = document.getElementById("searchResultsContainer");
@@ -154,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (searchBlock) searchBlock.style.display = "none";
                 return;
             }
-            const allProducts = document.querySelectorAll(".product, .product-card-scroll, .grid-item");
+            const allProducts = document.querySelectorAll(".main .product, .main .product-card-scroll, .main .grid-item");
             let hasResults = false;
             if (searchResultsContainer) searchResultsContainer.innerHTML = "";
             allProducts.forEach(prod => {
@@ -177,36 +179,52 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updateCartCounter() {
-        const cartCountEl = document.getElementById("cartCount");
-        if (cartCountEl) {
-            const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
-            cartCountEl.textContent = totalQty;
-        }
+        const cartCountElements = document.querySelectorAll(".cartCount");
+        const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCountElements.forEach(el => {
+            el.textContent = totalQty;
+        });
     }
     updateCartCounter();
 
     const productModal = document.getElementById("productModal");
     const closeBtn = document.querySelector(".close-btn");
+    const qtySelect = document.getElementById("prodQty");
     let selectedProductData = null;
+
+    function updateModalLivePrice() {
+        if (!selectedProductData) return;
+        const currentQty = parseInt(qtySelect.value) || 1;
+        const totalPrice = selectedProductData.basePrice * currentQty;
+        const mPrice = document.getElementById("modalProductPrice");
+        if (mPrice) mPrice.textContent = `₹${totalPrice}`;
+    }
+
+    if (qtySelect) {
+        qtySelect.addEventListener("change", updateModalLivePrice);
+    }
 
     document.body.addEventListener("click", (e) => {
         const productCard = e.target.closest(".product, .product-card-scroll, .grid-item");
-        if (productCard && !e.target.classList.contains("add-to-cart-btn")) {
+        if (productCard && !e.target.classList.contains("add-to-cart-btn") && !e.target.closest("#searchBlock")) {
             const name = productCard.querySelector("p").textContent;
             const imgUrl = productCard.querySelector("img").src;
             const price = parseInt(productCard.getAttribute("data-price")) || 0;
             const weight = productCard.getAttribute("data-weight") || "1kg";
-            selectedProductData = { name, imgUrl, price, weight };
+            
+            selectedProductData = { name, imgUrl, basePrice: price, weight };
+            
             const mName = document.getElementById("modalProductName");
             const mImg = document.getElementById("modalProductImg");
-            const mPrice = document.getElementById("modalProductPrice");
             const mWeight = document.getElementById("modalProductWeight");
+            
             if(mName) mName.textContent = name;
             if(mImg) mImg.src = imgUrl;
-            if(mPrice) mPrice.textContent = `₹${price}`;
             if(mWeight) mWeight.textContent = weight;
-            const pQty = document.getElementById("prodQty");
-            if(pQty) pQty.value = "1";
+            if(qtySelect) qtySelect.value = "1";
+            
+            updateModalLivePrice();
+            
             if (productModal) productModal.style.display = "block";
         }
     });
@@ -222,115 +240,77 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    const modalAddToCartBtn = document.querySelector(".modal-right .add-to-cart-btn");
+    const modalAddToCartBtn = document.querySelector("#productModal .add-to-cart-btn");
     if (modalAddToCartBtn) {
         modalAddToCartBtn.addEventListener("click", () => {
             if (!selectedProductData) return;
-            const qtySelect = document.getElementById("prodQty");
-            const quantity = parseInt(qtySelect.value) || 1;
+            const quantity = parseInt(qtySelect ? qtySelect.value : 1);
             const existingItem = cart.find(item => item.name === selectedProductData.name);
+
             if (existingItem) {
                 existingItem.quantity += quantity;
             } else {
                 cart.push({
                     name: selectedProductData.name,
-                    price: selectedProductData.price,
                     imgUrl: selectedProductData.imgUrl,
+                    price: selectedProductData.basePrice,
                     weight: selectedProductData.weight,
                     quantity: quantity
                 });
             }
+
             localStorage.setItem("userCart", JSON.stringify(cart));
             updateCartCounter();
             if (productModal) productModal.style.display = "none";
-            alert(`🎉 ${selectedProductData.name} কার্টে যোগ হয়েছে!`);
         });
     }
 
-    const cartItemsContainer = document.getElementById("cartItemsContainer");
-    const emptyCartMessage = document.getElementById("emptyCartMessage");
-    const checkoutBox = document.getElementById("checkoutBox");
-    const totalItemsCount = document.getElementById("totalItemsCount");
-    const cartSubtotal = document.getElementById("cartSubtotal");
-    const navUserName = document.getElementById("nav-user-name");
+    const modalBuyNowBtn = document.querySelector("#productModal .buy-now-btn");
+    if (modalBuyNowBtn) {
+        modalBuyNowBtn.addEventListener("click", () => {
+            if (!selectedProductData) return;
+            const quantity = parseInt(qtySelect ? qtySelect.value : 1);
+            const existingItem = cart.find(item => item.name === selectedProductData.name);
+            
+            if (existingItem) {
+                existingItem.quantity = quantity;
+            } else {
+                cart.push({
+                    name: selectedProductData.name,
+                    imgUrl: selectedProductData.imgUrl,
+                    price: selectedProductData.basePrice,
+                    weight: selectedProductData.weight,
+                    quantity: quantity
+                });
+            }
 
-    if (navUserName && savedUser) {
-        const userObj = JSON.parse(savedUser);
-        navUserName.textContent = `Hello, ${userObj.name}`;
+            localStorage.setItem("userCart", JSON.stringify(cart));
+            window.location.href = "cart.html";
+        });
     }
 
-    function renderCartPage() {
-        if (!cartItemsContainer) return; 
-        updateCartCounter();
-        if (cart.length === 0) {
-            cartItemsContainer.style.display = "none";
-            if (checkoutBox) checkoutBox.style.display = "none";
-            if (emptyCartMessage) emptyCartMessage.style.display = "block";
-            return;
+    const menuBtn = document.getElementById("menu-btn");
+    const sidebarMenu = document.getElementById("sidebarMenu");
+    const closeSidebarBtn = document.getElementById("closeSidebarBtn");
+
+    if (menuBtn && sidebarMenu) {
+        menuBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            sidebarMenu.classList.add("active");
+        });
+    }
+
+    if (closeSidebarBtn && sidebarMenu) {
+        closeSidebarBtn.addEventListener("click", () => {
+            sidebarMenu.classList.remove("active");
+        });
+    }
+
+    document.addEventListener("click", (e) => {
+        if (sidebarMenu && sidebarMenu.classList.contains("active")) {
+            if (!sidebarMenu.contains(e.target) && e.target !== menuBtn) {
+                sidebarMenu.classList.remove("active");
+            }
         }
-        cartItemsContainer.style.display = "block";
-        if (checkoutBox) checkoutBox.style.display = "block";
-        if (emptyCartMessage) emptyCartMessage.style.display = "none";
-        cartItemsContainer.innerHTML = "";
-        let grandTotal = 0;
-        let totalItems = 0;
-        cart.forEach((item, index) => {
-            grandTotal += (item.price * item.quantity);
-            totalItems += item.quantity;
-            const itemHtml = `
-                <div class="cart-item">
-                    <img src="${item.imgUrl}" class="cart-item-img" alt="${item.name}">
-                    <div class="cart-item-details">
-                        <div class="cart-item-title">${item.name}</div>
-                        <div style="font-size: 13px; color: #565959;">Weight: ${item.weight}</div>
-                        <div class="cart-item-price">₹${item.price}</div>
-                        <div class="cart-action-row">
-                            <label style="font-size: 13px;">Qty: 
-                                <select class="cart-qty-select" data-index="${index}" style="padding: 2px 6px; border-radius: 4px;">
-                                    ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(q => 
-                                        `<option value="${q}" ${q === item.quantity ? 'selected' : ''}>${q}</option>`
-                                    ).join('')}
-                                </select>
-                            </label>
-                            <span style="color: #ddd;">|</span>
-                            <button class="delete-item-btn" data-index="${index}">Delete</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            cartItemsContainer.innerHTML += itemHtml;
-        });
-        if (totalItemsCount) totalItemsCount.textContent = totalItems;
-        if (cartSubtotal) cartSubtotal.textContent = grandTotal;
-
-        document.querySelectorAll(".cart-qty-select").forEach(select => {
-            select.addEventListener("change", (e) => {
-                const idx = parseInt(e.target.getAttribute("data-index"));
-                cart[idx].quantity = parseInt(e.target.value);
-                localStorage.setItem("userCart", JSON.stringify(cart));
-                renderCartPage();
-            });
-        });
-
-        document.querySelectorAll(".delete-item-btn").forEach(btn => {
-            btn.addEventListener("click", (e) => {
-                const idx = parseInt(e.target.getAttribute("data-index"));
-                cart.splice(idx, 1);
-                localStorage.setItem("userCart", JSON.stringify(cart));
-                renderCartPage();
-            });
-        });
-    }
-
-    renderCartPage();
-
-    const proceedToBuyBtn = document.getElementById("proceedToBuyBtn");
-    if (proceedToBuyBtn) {
-        proceedToBuyBtn.addEventListener("click", () => {
-            alert("🎉 Order Placed Successfully! Thank you for shopping with Roni.in.");
-            cart = [];
-            localStorage.removeItem("userCart");
-            renderCartPage();
-        });
-    }
+    });
 });
