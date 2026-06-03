@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <div id="authModal" class="modal" style="display: block;">
         <div class="modal-content" style="max-width: 400px; padding: 30px;">
             <div id="loginSection">
@@ -21,7 +20,6 @@
                     New to Roni.in? <a href="#" id="showSignupLink" style="color: #0066c0; text-decoration: none; font-weight: bold;">Create your account</a>
                 </p>
             </div>
-
             <div id="signupSection" style="display: none;">
                 <h2 style="margin-bottom: 15px; text-align: center;">Create Account</h2>
                 <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px;">
@@ -34,8 +32,7 @@
                 <p style="font-size: 13px; text-align: center; margin-top: 20px;">
                     Already have an account? <a href="#" id="showLoginLink" style="color: #0066c0; text-decoration: none; font-weight: bold;">Sign In</a>
                 </p>
-            </div>
-            
+            </div>         
             <p id="authMessage" style="color: red; font-size: 13px; margin-top: 15px; text-align: center; display: none;"></p>
         </div>
     </div>
@@ -58,10 +55,12 @@
                         </ul>
                     </div>
                 </div>
-                <div class="hyper">
-                    <a href="cart.html" class="nav-link" id="cart-counter">Cart 🛒: <span id="cartCount" style="color: #f3a847;">0</span></a>
+                <a href="cart.html" class="nav-link mobile-cart-link">🛒<span class="cartCount">0</span></a>
+                <div class="hyper" id="sidebarMenu">
+                    <button class="close-sidebar" id="closeSidebarBtn">&times;</button>
                     <a href="index.html" class="nav-link">Returns & Orders</a>
                 </div>
+                <a href="cart.html" class="nav-link main-cart-link">Cart 🛒:<span class="cartCount" style="color: #f3a847;">0</span></a>
             </div>
         </div>
         <div class="navbar-2">
