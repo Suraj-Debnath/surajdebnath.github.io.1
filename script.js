@@ -166,6 +166,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (productName.includes(searchTerm)) {
                         hasResults = true;
                         const clone = prod.cloneNode(true);
+                        clone.setAttribute("data-price", prod.getAttribute("data-price"));
+                        clone.setAttribute("data-weight", prod.getAttribute("data-weight"));
                         if (searchResultsContainer) searchResultsContainer.appendChild(clone);
                     }
                 }
@@ -206,26 +208,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.body.addEventListener("click", (e) => {
         const productCard = e.target.closest(".product, .product-card-scroll, .grid-item");
-        if (productCard && !e.target.classList.contains("add-to-cart-btn") && !e.target.closest("#searchBlock")) {
-            const name = productCard.querySelector("p").textContent;
-            const imgUrl = productCard.querySelector("img").src;
-            const price = parseInt(productCard.getAttribute("data-price")) || 0;
-            const weight = productCard.getAttribute("data-weight") || "1kg";
-            
-            selectedProductData = { name, imgUrl, basePrice: price, weight };
-            
-            const mName = document.getElementById("modalProductName");
-            const mImg = document.getElementById("modalProductImg");
-            const mWeight = document.getElementById("modalProductWeight");
-            
-            if(mName) mName.textContent = name;
-            if(mImg) mImg.src = imgUrl;
-            if(mWeight) mWeight.textContent = weight;
-            if(qtySelect) qtySelect.value = "1";
-            
-            updateModalLivePrice();
-            
-            if (productModal) productModal.style.display = "block";
+        if (productCard && !e.target.classList.contains("add-to-cart-btn")) {
+            const pTag = productCard.querySelector("p");
+            const imgTag = productCard.querySelector("img");
+
+            if (pTag && imgTag) {
+                const name = pTag.textContent;
+                const imgUrl = imgTag.src;
+                const price = parseInt(productCard.getAttribute("data-price")) || 0;
+                const weight = productCard.getAttribute("data-weight") || "1kg";
+                
+                selectedProductData = { name, imgUrl, basePrice: price, weight };
+                
+                const mName = document.getElementById("modalProductName");
+                const mImg = document.getElementById("modalProductImg");
+                const mWeight = document.getElementById("modalProductWeight");
+                
+                if(mName) mName.textContent = name;
+                if(mImg) mImg.src = imgUrl;
+                if(mWeight) mWeight.textContent = weight;
+                if(qtySelect) qtySelect.value = "1";
+                
+                updateModalLivePrice();
+                
+                if (productModal) productModal.style.display = "block";
+            }
         }
     });
 
@@ -314,3 +321,70 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+
+    const TELEGRAM_BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE'; 
+    const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID_HERE'; 
+
+    async function sendOrderToTelegram(orderDetails) {
+        let message = `🛍️ *New Order Placed on Roni.in* 🛍️\n\n`;
+        message += `👤 *Customer:* ${orderDetails.customerName}\n`;
+        message += `📞 *Phone:* ${orderDetails.customerPhone}\n`;
+        message += `📧 *Email:* ${orderDetails.customerEmail}\n\n`;
+        message += `📦 *Products:* \n`;
+        
+        orderDetails.items.forEach((item, index) => {
+            message += `${index + 1}. ${item.name} (${item.weight}) x ${item.quantity} = ₹${item.price * item.quantity}\n`;
+        });
+        
+        message += `\n💰 *Total Amount:* ₹${orderDetails.totalAmount}\n`;
+        message += `📍 *Status:* Pending Cash on Delivery`;
+
+        const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+        try {
+            await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: message,
+                    parse_mode: 'Markdown'
+                })
+            });
+            alert("অর্ডার সফল হয়েছে! আপনার কাছে শীঘ্রই কনফার্মেশন কল যাবে।");
+            localStorage.removeItem("userCart"); 
+            window.location.href = "index.html"; 
+        } catch (error) {
+            console.error("টেলিগ্রামে মেসেজ পাঠাতে সমস্যা হয়েছে:", error);
+            alert("অর্ডার প্রসেস করতে কিছুটা সমস্যা হয়েছে, দয়া করে আবার চেষ্টা করুন।");
+        }
+    }ে
+    const checkoutBtn = document.getElementById("checkoutBtn");
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener("click", () => {
+            if (cart.length === 0) {
+                alert("আপনার কার্ট খালি!");
+                return;
+            }
+
+            const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+            if (!loggedInUser) {
+                alert("অর্ডার করতে দয়া করে আগে লগইন করুন!");
+                if (authModal) authModal.style.display = "block";
+                return;
+            }
+
+            const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            const orderDetails = {
+                customerName: loggedInUser.name || "Unknown",
+                customerPhone: loggedInUser.phone || "N/A",
+                customerEmail: loggedInUser.email || "N/A",
+                items: cart,
+                totalAmount: totalAmount
+            };
+
+            sendOrderToTelegram(orderDetails);
+        });
+    }
