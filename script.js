@@ -322,7 +322,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-
     const TELEGRAM_BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE'; 
     const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID_HERE'; 
 
@@ -353,13 +352,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
             });
             alert("অর্ডার সফল হয়েছে! আপনার কাছে শীঘ্রই কনফার্মেশন কল যাবে।");
-            localStorage.removeItem("userCart"); 
+            localStorage.removeItem("userCart");  
             window.location.href = "index.html"; 
         } catch (error) {
             console.error("টেলিগ্রামে মেসেজ পাঠাতে সমস্যা হয়েছে:", error);
             alert("অর্ডার প্রসেস করতে কিছুটা সমস্যা হয়েছে, দয়া করে আবার চেষ্টা করুন।");
         }
-    }ে
+    }
+
     const checkoutBtn = document.getElementById("checkoutBtn");
     if (checkoutBtn) {
         checkoutBtn.addEventListener("click", () => {
