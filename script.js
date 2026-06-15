@@ -1,6 +1,20 @@
 document.addEventListener("DOMContentLoaded", () => {
-    let cart = JSON.parse(localStorage.getItem("userCart")) || [];
     const savedUser = localStorage.getItem("loggedInUser");
+    if (savedUser) {
+        const userObj = JSON.parse(savedUser);
+        fetch('https://backend-7k8k.onrender.com/api/auth/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: userObj.email })
+        }).then(res => res.json()).then(data => {
+            if (!data.success) {
+                localStorage.removeItem("loggedInUser");
+                window.location.reload();
+            }
+        }).catch(() => {});
+    }
+
+    let cart = JSON.parse(localStorage.getItem("userCart")) || [];
     const authModal = document.getElementById("authModal");
 
     if (authModal) {
@@ -112,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         window.location.reload();
                     }, 1000);
                 } else {
-                    showAuthMsg("দুঃখিত, এই একাউন্টটি আমাদের ডাটাবেসে নেই। দয়া করে সাইন-আপ করুন।", "red", false);
+                    showAuthMsg("দুঃখিত, এই একাউন্টটি আমাদের ডাটাবেসে নেই। দয়া করে সাইন-আপ করুন।", "red", false);
                     setTimeout(() => {
                         loginSection.style.display = "none";
                         signupSection.style.display = "block";
