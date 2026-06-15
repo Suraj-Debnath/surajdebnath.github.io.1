@@ -112,7 +112,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         window.location.reload();
                     }, 1000);
                 } else {
-                    showAuthMsg(data.message, "red", false);
+                    showAuthMsg("দুঃখিত, এই একাউন্টটি আমাদের ডাটাবেসে নেই। দয়া করে সাইন-আপ করুন।", "red", false);
+                    setTimeout(() => {
+                        loginSection.style.display = "none";
+                        signupSection.style.display = "block";
+                        if (authMessage) authMessage.style.display = "none";
+                    }, 2000);
                 }
             } catch (error) {
                 showAuthMsg("সার্ভার ব্যাকগ্রাউন্ডে চালু হচ্ছে... দয়া করে আর ৩০ সেকেন্ড অপেক্ষা করে আবার ক্লিক করুন।", "green", true);
@@ -320,7 +325,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
-});
 
     const TELEGRAM_BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE'; 
     const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID_HERE'; 
@@ -351,12 +355,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     parse_mode: 'Markdown'
                 })
             });
-            alert("অর্ডার সফল হয়েছে! আপনার কাছে শীঘ্রই কনফার্মেশন কল যাবে।");
+            alert("অর্ডার সফল হয়েছে! আপনার কাছে শীঘ্রই কনফার্মেশন কল যাবে।");
             localStorage.removeItem("userCart");  
             window.location.href = "index.html"; 
         } catch (error) {
-            console.error("টেলিগ্রামে মেসেজ পাঠাতে সমস্যা হয়েছে:", error);
-            alert("অর্ডার প্রসেস করতে কিছুটা সমস্যা হয়েছে, দয়া করে আবার চেষ্টা করুন।");
+            console.error("টেলিগ্রামে মেসেজ পাঠাতে সমস্যা হয়েছে:", error);
+            alert("অর্ডার প্রসেস করতে কিছুটা সমস্যা হয়েছে, দয়া করে আবার চেষ্টা করুন।");
         }
     }
 
@@ -370,7 +374,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
             if (!loggedInUser) {
-                alert("অর্ডার করতে দয়া করে আগে লগইন করুন!");
+                alert("অর্ডার করতে দয়া করে আগে লগইন করুন!");
                 if (authModal) authModal.style.display = "block";
                 return;
             }
@@ -388,3 +392,4 @@ document.addEventListener("DOMContentLoaded", () => {
             sendOrderToTelegram(orderDetails);
         });
     }
+});
