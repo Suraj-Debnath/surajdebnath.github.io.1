@@ -5,29 +5,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const subtotalBox = document.getElementById("subtotalBox");
     const totalItemsText = document.getElementById("totalItemsText");
     const totalPriceText = document.getElementById("totalPriceText");
-    const confirmPaymentArea = document.getElementById("confirmPaymentArea");
     const checkoutBtn = document.getElementById("checkoutBtn");
-    const iHavePaidBtn = document.getElementById("iHavePaidBtn");
 
-    const MY_UPI_ID = '9046736451-2@ybl'; 
     const TELEGRAM_BOT_TOKEN = '8913227045:AAEtDye02cGt7YlrEGGRamkPlBLs7fuGxpU'; 
     const TELEGRAM_CHAT_ID = '8865756908'; 
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    let globalOrderDetails = null;
 
     function showAlert(elementId, text, type = "error") {
         const alertBox = document.getElementById(elementId);
         if (!alertBox) return;
         alertBox.textContent = text;
         alertBox.style.display = "block";
-        alertBox.style.background = type === "success" ? "#e8f5e9" : type === "info" ? "#e3f2fd" : "#ffebee";
-        alertBox.style.color = type === "success" ? "#2e7d32" : type === "info" ? "#0d47a1" : "#c62828";
+        alertBox.style.background = type === "success" ? "#e8f5e9" : "#ffebee";
+        alertBox.style.color = type === "success" ? "#2e7d32" : "#c62828";
         alertBox.style.border = "1px solid";
-    }
-
-    function clearAlerts() {
-        document.getElementById("mainAlertMsg").style.display = "none";
-        document.getElementById("paymentAlertMsg").style.display = "none";
     }
 
     function renderCart() {
@@ -91,50 +81,48 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Checkout & Telegram Logic (পূর্বের ন্যায় অক্ষুন্ন)
     if (checkoutBtn) {
         checkoutBtn.addEventListener("click", () => {
-            clearAlerts();
+            document.getElementById("mainAlertMsg").style.display = "none";
             const address = document.getElementById("deliveryAddress").value.trim();
             const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+            
             if (!loggedInUser) return showAlert("mainAlertMsg", "লগইন করুন!", "error");
             if (address === "") return showAlert("mainAlertMsg", "ঠিকানা লিখুন!", "error");
 
             const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-            globalOrderDetails = { customerName: loggedInUser.name, customerPhone: loggedInUser.phone, address, items: cart, totalAmount, paymentMethod: selectedMethod };
+            
+            const orderDetails = { 
+                customerName: loggedInUser.name, 
+                customerPhone: loggedInUser.phone, 
+                address: address, 
+                items: cart, 
+                totalAmount: totalAmount, 
+                paymentMethod: "Cash on Delivery (COD)" 
+            };
 
-            if (selectedMethod === "ONLINE") {
-                if (confirmPaymentArea) confirmPaymentArea.style.display = "block";
-                if (isMobile) window.location.href = `upi://pay?pa=${MY_UPI_ID}&pn=Roni_Shop&am=${totalAmount}&cu=INR`;
-                showAlert("mainAlertMsg", "পেমেন্ট করে UTR নম্বরটি দিন।", "info");
-            } else {
-                sendOrderToTelegram(globalOrderDetails, "mainAlertMsg");
-            }
+            sendOrderToTelegram(orderDetails);
         });
     }
 
-    if (iHavePaidBtn) {
-        iHavePaidBtn.addEventListener("click", () => {
-            const txnId = document.getElementById("transactionId").value.trim();
-            if (txnId.length < 10) return showAlert("paymentAlertMsg", "সঠিক UTR ID দিন!", "error");
-            globalOrderDetails.transactionId = txnId;
-            sendOrderToTelegram(globalOrderDetails, "paymentAlertMsg");
-        });
-    }
-
-    async function sendOrderToTelegram(details, alertId) {
+    async function sendOrderToTelegram(details) {
         let msg = `🛍️ New Order: ${details.customerName}\n📞 ${details.customerPhone}\n📍 ${details.address}\n💳 ${details.paymentMethod}\n`;
-        if(details.transactionId) msg += `🔢 TxnID: ${details.transactionId}\n`;
         details.items.forEach(i => msg += `• ${i.name} (${i.quantity})\n`);
         msg += `💰 Total: ₹${details.totalAmount}`;
-        await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-            method: 'POST', headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({chat_id: TELEGRAM_CHAT_ID, text: msg})
-        });
-        showAlert(alertId, "অর্ডার সফল!", "success");
-        localStorage.removeItem("userCart");
-        setTimeout(() => window.location.href = "index.html", 2000);
+
+        try {
+            showAlert("mainAlertMsg", "অর্ডার প্রসেস হচ্ছে...", "info");
+            await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                method: 'POST', 
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({chat_id: TELEGRAM_CHAT_ID, text: msg})
+            });
+            showAlert("mainAlertMsg", "অর্ডার সফল!", "success");
+            localStorage.removeItem("userCart");
+            setTimeout(() => window.location.href = "index.html", 2000);
+        } catch (e) {
+            showAlert("mainAlertMsg", "নেটওয়ার্ক সমস্যা!", "error");
+        }
     }
 
     renderCart();
